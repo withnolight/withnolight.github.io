@@ -20,8 +20,8 @@
   <meta name="keywords" content="">
   
     <meta property="og:type" content="website">
-<meta property="og:title" content="神秘小猪的炼金工房">
-<meta property="og:url" content="http://withnolight.github.io/index.html">
+<meta property="og:title" content="归档">
+<meta property="og:url" content="http://withnolight.github.io/archives/2026/index.html">
 <meta property="og:site_name" content="神秘小猪的炼金工房">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:author" content="Succinamide">
@@ -29,7 +29,7 @@
   
   
   
-  <title>神秘小猪的炼金工房</title>
+  <title>归档 - 神秘小猪的炼金工房</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -83,7 +83,7 @@
   <header>
     
 
-<div class="header-inner" style="height: 100vh;">
+<div class="header-inner" style="height: 60vh;">
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
@@ -183,23 +183,19 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('https://api.yppp.net/api.php') no-repeat center center; background-size: cover;">
+     style="background: url('https://wei.thax.cn/res/api/bing/?res=uhd&mode=301') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="结构决定性质，性质决定用途。"></span>
+            <span id="subtitle" data-typed-text="归档"></span>
           
         </div>
 
         
       </div>
 
-      
-        <div class="scroll-down-bar">
-          <i class="iconfont icon-arrowdown"></i>
-        </div>
       
     </div>
   </div>
@@ -213,76 +209,28 @@
     
       <div class="container nopadding-x-md">
         <div id="board"
-          style="margin-top: 0">
+          >
           
           <div class="container">
             <div class="row">
               <div class="col-12 col-md-10 m-auto">
                 
 
-
-  <div class="row mx-auto index-card">
+<div class="list-group">
+  <p class="h4">共计 1 篇文章</p>
+  <hr>
+  
+  
     
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2026/%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%EF%BC%81/" target="_self">
-          第一篇文章！
-        </a>
-      </h2>
-
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2026/%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%EF%BC%81/" target="_self">
-        <div>
-          Across the Great Wall,we can reach every corner in the world.  这里是这个博客的第一篇文章！以后会在这里记录一些事情，分享在学习中的见闻，欢迎大家关注！
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2026-02-10 22:38" pubdate>
-              2026-02-10
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
+      <p class="h5">2026</p>
     
-      <span class="category-chain">
-        
-  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%8A%80%E6%9C%AF/" class="category-chain-item">计算机技术</a>
+    <a href="/2026/%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0%EF%BC%81/" class="list-group-item list-group-item-action">
+      <time>02-10</time>
+      <div class="list-group-item-title">第一篇文章！</div>
+    </a>
   
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E5%89%8D%E7%AB%AF/">#前端</a>
-            
-              <a href="/tags/%E7%BD%91%E7%AB%99/">#网站</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
+</div>
 
 
 
@@ -371,37 +319,7 @@
       }
       var text = subtitle.getAttribute('data-typed-text');
       
-        jQuery.ajax({
-          type: 'GET',
-          url: 'https://v1.hitokoto.cn/?c=k&encode=json',
-          headers: {},
-          dataType: 'json',
-          success: function(result) {
-            var apiText;
-            if (result) {
-              var keys = 'hitokoto'.split(',');
-              if (result instanceof Array) {
-                result = result[0];
-              }
-              for (const k of keys) {
-                var value = result[k];
-                if (typeof value === 'string') {
-                  apiText = value;
-                  break;
-                } else if (value instanceof Object) {
-                  result = value;
-                }
-              }
-            }
-            apiText ? typing(apiText) : typing(text);
-          },
-          error: function(xhr, status, error) {
-            if (error) {
-              console.error('Failed to request https://v1.hitokoto.cn/?c=k&amp;encode=json:', error);
-            }
-            typing(text);
-          }
-        })
+        typing(text);
       
     })(window, document);
   </script>
