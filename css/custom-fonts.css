@@ -1,0 +1,15 @@
+:root {
+  --site-serif-font: Georgia, "Times New Roman", "Noto Serif CJK SC", "Source Han Serif SC",
+    "Source Han Serif CN", "Songti SC", STSong, SimSun, NSimSun, serif;
+}
+
+html body,
+html body .markdown-body,
+html body .markdown-body h1,
+html body .markdown-body h2,
+html body .markdown-body h3,
+html body .markdown-body h4,
+html body .markdown-body h5,
+html body .markdown-body h6 {
+  font-family: var(--site-serif-font) !important;
+}

@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="三相共存点的交互式流体运动学实验：用速度场理解流线与迹线"
+    />
+    <meta name="author" content="Haskina" />
+    <meta name="theme-color" content="#0c2836" />
+    <link rel="canonical" href="https://idsmile.top/projects/streamline-pathline/" />
+    <title>流线与迹线｜三相共存点</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="https://idsmile.top/" target="_blank" rel="noopener noreferrer" aria-label="在新标签页打开三相共存点首页">
+        <svg viewBox="0 0 42 42" aria-hidden="true">
+          <path d="M7 14c8-8 20-8 28 0" />
+          <path d="M7 21c8-8 20-8 28 0" />
+          <path d="M7 28c8-8 20-8 28 0" />
+        </svg>
+        <span><b>三相共存点</b></span>
+      </a>
+      <nav aria-label="页面导航">
+        <a href="#experiment">交互实验</a>
+        <a href="#concepts">概念对照</a>
+      </nav>
+      <div class="page-mark">流体运动学</div>
+    </header>
+
+    <main id="top">
+      <section class="hero" aria-labelledby="page-title">
+        <div class="hero-grid">
+          <div>
+            <h1 id="page-title">流线与迹线</h1>
+            <p class="hero-copy">
+              流线描述速度场在<strong>某一瞬间</strong>的方向；迹线记录一个流体质点
+              <strong>随时间走过</strong>的路径。拖动时间、切换流态，亲眼看看它们何时分开、何时重合。
+            </p>
+          </div>
+          <div class="hero-aside" aria-label="核心概念概览">
+            <div class="aside-item">
+              <div><small>固定时间</small><strong>观察整个速度场</strong></div>
+              <b class="cyan">流线</b>
+            </div>
+            <div class="aside-divider"></div>
+            <div class="aside-item">
+              <div><small>跟随质点</small><strong>记录一段运动历史</strong></div>
+              <b class="orange">迹线</b>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="lab-shell" id="experiment" aria-labelledby="lab-title">
+        <div class="lab-heading">
+          <div>
+            <h2 id="lab-title">速度场观察窗</h2>
+          </div>
+          <p>两侧使用完全相同的速度场与时钟</p>
+        </div>
+
+        <div class="control-bar">
+          <div class="control-group">
+            <span class="control-label">流动状态</span>
+            <div class="segmented" role="group" aria-label="选择流动状态">
+              <button class="mode-button active" type="button" data-mode="unsteady" aria-pressed="true">
+                非定常流
+              </button>
+              <button class="mode-button" type="button" data-mode="steady" aria-pressed="false">
+                定常流
+              </button>
+            </div>
+          </div>
+
+          <div class="time-display" aria-live="polite">
+            <span>实验时间</span>
+            <strong>t = <output id="time-output">0.00</output> s</strong>
+          </div>
+
+          <div class="playback-controls">
+            <label class="speed-control">
+              <span>速度</span>
+              <input id="speed-range" type="range" min="0.35" max="1.8" value="1" step="0.05" />
+              <output id="speed-output">1.0×</output>
+            </label>
+            <button class="icon-button secondary" id="reset-button" type="button" aria-label="重新开始实验" title="重新开始">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8V3m0 0h5M4 3l3.6 3.6A8 8 0 1 1 4.3 14" /></svg>
+            </button>
+            <button class="play-button" id="play-button" type="button" aria-label="暂停动画">
+              <svg class="pause-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6v12M16 6v12" /></svg>
+              <svg class="play-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m8 5 11 7-11 7V5Z" /></svg>
+              <span>暂停</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="insight-banner" id="insight-banner">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v3m6.4-.4-2.1 2.1M21 12h-3M5.6 5.6l2.1 2.1M3 12h3m6-3a5 5 0 0 0-3 9v2h6v-2a5 5 0 0 0-3-9Z" /></svg>
+          <p><strong>现在是非定常流：</strong>同一位置的速度会随时间改变，因此质点走过的历史路径通常不贴合此刻的流线。</p>
+        </div>
+
+        <div class="visual-grid">
+          <article class="visual-panel streamline-panel">
+            <header>
+              <div>
+                <h3>流线 <span>· 此刻的方向地图</span></h3>
+              </div>
+            </header>
+            <div class="canvas-wrap">
+              <canvas id="streamline-canvas" aria-label="当前时刻速度场与流线可视化"></canvas>
+              <div class="canvas-note top-note">固定在 <b class="canvas-time">t = 0.00 s</b></div>
+              <div class="axis-label axis-y">y</div>
+              <div class="axis-label axis-x">x</div>
+              <div class="flow-direction">流动方向 <span>→</span></div>
+            </div>
+            <footer>
+              <span class="line-swatch cyan-line"></span>
+              <p>曲线上每一点的<strong>切线方向</strong>，都与该点此刻的速度方向一致。</p>
+            </footer>
+          </article>
+
+          <article class="visual-panel pathline-panel">
+            <header>
+              <div>
+                <h3>迹线 <span>· 一个质点的运动履历</span></h3>
+              </div>
+            </header>
+            <div class="canvas-wrap">
+              <canvas id="pathline-canvas" aria-label="流体质点运动轨迹可视化"></canvas>
+              <div class="canvas-note top-note">追踪质点 <b>P</b></div>
+              <div class="comparison-note"><i></i> 此刻经过 P 的流线</div>
+              <div class="axis-label axis-y">y</div>
+              <div class="axis-label axis-x">x</div>
+              <div class="particle-callout" id="particle-callout">质点 P · 当前位置</div>
+            </div>
+            <footer>
+              <span class="line-swatch orange-line"></span>
+              <p>选定一个流体质点，把它在<strong>不同时刻的位置</strong>依次连接起来。</p>
+            </footer>
+          </article>
+        </div>
+
+        <div class="lab-legend" aria-label="图例">
+          <span><i class="legend-arrow">→</i> 局部速度方向</span>
+          <span><i class="legend-line-cyan"></i> 当前流线（迹线图中为虚线）</span>
+          <span><i class="legend-line-orange"></i> 质点历史轨迹</span>
+          <span><i class="legend-dot"></i> 被追踪质点 P</span>
+        </div>
+      </section>
+
+      <section class="concepts" id="concepts" aria-labelledby="concept-title">
+        <div class="concept-heading">
+          <div>
+            <h2 id="concept-title">一眼分清：空间快照 vs. 时间履历</h2>
+          </div>
+          <p>区别不在“线长什么样”，而在它们回答了不同的问题。</p>
+        </div>
+
+        <div class="question-grid">
+          <article class="question-card cyan-card">
+            <small>流线回答</small>
+            <h3>“在 t 时刻，流体正朝哪里流？”</h3>
+            <p>把时钟按下暂停键，读取空间中每一点的速度方向，再把处处与速度相切的曲线画出来。</p>
+            <div class="formula"><span>dy</span><b>/</b><span>dx</span><strong>=</strong><span>v(x,y,t)</span><b>/</b><span>u(x,y,t)</span></div>
+          </article>
+
+          <div class="versus" aria-hidden="true"><span>VS</span><i></i></div>
+
+          <article class="question-card orange-card">
+            <small>迹线回答</small>
+            <h3>“这个质点，从过去到现在走过哪里？”</h3>
+            <p>给一个流体质点做上标记，连续记录它的位置；历史位置的集合，就是这个质点的迹线。</p>
+            <div class="formula stacked"><span>dx/dt = u(x,y,t)</span><span>dy/dt = v(x,y,t)</span></div>
+          </article>
+        </div>
+
+        <div class="comparison-table" role="table" aria-label="流线与迹线比较">
+          <div class="table-row table-head" role="row">
+            <div role="columnheader">比较维度</div>
+            <div role="columnheader"><i class="cyan-dot"></i> 流线 STREAMLINE</div>
+            <div role="columnheader"><i class="orange-dot"></i> 迹线 PATHLINE</div>
+          </div>
+          <div class="table-row" role="row">
+            <div role="cell">观察视角</div><div role="cell">欧拉视角 · 关注空间</div><div role="cell">拉格朗日视角 · 跟随质点</div>
+          </div>
+          <div class="table-row" role="row">
+            <div role="cell">时间含义</div><div role="cell">同一时刻的瞬时信息</div><div role="cell">一段时间的历史信息</div>
+          </div>
+          <div class="table-row" role="row">
+            <div role="cell">能否相交</div><div role="cell">同一时刻不能相交</div><div role="cell">不同时段可以交叉</div>
+          </div>
+          <div class="table-row highlight-row" role="row">
+            <div role="cell">定常流中</div><div role="cell">两者重合</div><div role="cell">两者重合</div>
+          </div>
+        </div>
+
+        <aside class="takeaway">
+          <div class="takeaway-mark">!</div>
+          <div>
+            <p><strong>流线看“此刻”，迹线看“经历”。</strong>只有速度场不随时间变化的定常流中，它们才会彼此重合。</p>
+          </div>
+          <button id="replay-button" type="button">回到实验验证 <span>↑</span></button>
+        </aside>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>三相共存点 · Haskina</p>
+      <p>交互式流体运动学</p>
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>
