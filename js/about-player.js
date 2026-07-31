@@ -1,20 +1,16 @@
 (() => {
   "use strict";
 
-  const mountedPlayer = document.querySelector("body > .about-player[data-mounted]");
+  document.querySelectorAll("body > .about-player").forEach((player) => player.remove());
+
   const pagePlayer = document.querySelector(".page-template-content .about-player");
 
   if (!pagePlayer) {
-    mountedPlayer?.remove();
     return;
   }
 
-  if (mountedPlayer && mountedPlayer !== pagePlayer) {
-    mountedPlayer.remove();
-  }
-
-  document.body.append(pagePlayer);
-  pagePlayer.dataset.mounted = "true";
+  if (pagePlayer.dataset.playerReady === "true") return;
+  pagePlayer.dataset.playerReady = "true";
 
   const audio = pagePlayer.querySelector("audio");
   const toggle = pagePlayer.querySelector(".about-player__toggle");
